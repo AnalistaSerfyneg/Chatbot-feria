@@ -87,7 +87,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 80%;
+      height: 100%;
       font-size: 16px;
       color: #666666;
     }
@@ -148,22 +148,26 @@
     </div>
   </div>
 
- <script type="module">
-  import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+  <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
 
-  const initChatbot = async () => {
-    try {
-      await Chatbot.initFull({
-        chatflowid: "TU_CHATFLOW_ID_AQUI", // <-- Asegúrate de poner el correcto
-        apiHost: "https://crucial-solely-buffalo.ngrok-free.app",
-      });
-    } catch (error) {
-      console.error("Error al cargar el chatbot:", error);
-    }
-  };
+    const initChatbot = async () => {
+      try {
+        await Chatbot.initFull({
+          chatflowid: "ba43c2e8-18d3-4c81-99ff-44c8152f5c9b",
+          apiHost: "https://crucial-solely-buffalo.ngrok-free.app",
+        });
+        // Hide loading state
+        document.getElementById("chat-loading").style.display = "none";
+        document.getElementById("chatbot").style.display = "block";
+      } catch (error) {
+        console.error("Error initializing chatbot:", error);
+        document.getElementById("chat-loading").innerText = "Error al cargar el chatbot. Por favor, intenta de nuevo.";
+      }
+    };
 
-  setTimeout(initChatbot, 100);
-</script>
-
+    // Initialize chatbot with a slight delay to ensure DOM is ready
+    setTimeout(initChatbot, 100);
+  </script>
 </body>
 </html>
