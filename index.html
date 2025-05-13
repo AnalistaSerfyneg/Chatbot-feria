@@ -72,8 +72,7 @@
       height: 100%;
       display: block;
       overflow-y: auto;
-      /* Ensure the input field is not hidden */
-      --flowise-input-height: 60px; /* Adjust based on Flowise input height */
+      --flowise-input-height: 60px;
     }
     flowise-fullchatbot::part(input-container) {
       position: sticky;
@@ -143,7 +142,7 @@
 
     <!-- Pie de página -->
     <div class="footer">
-      <p>Serfyneg S.A.S. | Todos los derechos reservados | 2025</p>
+      <p>Serfyneg S.A.S. | Todos los derechos reserved | 2025</p>
       <p>Teléfono: 601 915 9644 ext. 3003 | Correo: <a href="mailto:fna@serfyneg.com">fna@serfyneg.com</a></p>
     </div>
   </div>
@@ -154,15 +153,15 @@
     const initChatbot = async () => {
       try {
         await Chatbot.initFull({
-          chatflowid: "ba43c2e8-18d3-4c81-99ff-44c8152f5c9b",
-          apiHost: "https://crucial-solely-buffalo.ngrok-free.app",
+          chatflowid: "ba43c2e8-18d3-4c81-99ff-44c8152f5c9b", // REPLACE WITH YOUR VALID CHATFLOW ID
+          apiHost: "https://crucial-solely-buffalo.ngrok-free.app", // REPLACE WITH YOUR VALID FLOWISE API HOST
         });
         // Hide loading state
         document.getElementById("chat-loading").style.display = "none";
         document.getElementById("chatbot").style.display = "block";
       } catch (error) {
         console.error("Error initializing chatbot:", error);
-        document.getElementById("chat-loading").innerText = "Error al cargar el chatbot. Por favor, intenta de nuevo.";
+        document.getElementById("chat-loading").innerText = "Error al cargar el chatbot. Por favor, verifica el chatflowid y el apiHost.";
       }
     };
 
