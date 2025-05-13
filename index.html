@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot de Inmuebles - Serfyneg</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .header {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fna-logo {
+      width: 150px;
+      height: auto;
+    }
+    .serfyneg-logo {
+      width: 150px;
+      height: auto;
+    }
+    .content {
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 24px;
+      color: #333333;
+      margin: 0 0 15px;
+      font-weight: 500;
+    }
+    p {
+      font-size: 16px;
+      color: #666666;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+    .chat-container {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    flowise-fullchatbot {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow-y: auto;
+      /* Ensure the input field is not hidden */
+      --flowise-input-height: 60px; /* Adjust based on Flowise input height */
+    }
+    flowise-fullchatbot::part(input-container) {
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      z-index: 10;
+      padding: 10px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80%;
+      font-size: 16px;
+      color: #666666;
+    }
+    .footer {
+      background-color: #f5f5f5;
+      padding: 15px;
+      text-align: center;
+      border-radius: 0 0 12px 12px;
+      font-size: 12px;
+      color: #666666;
+    }
+    .footer p {
+      margin: 0;
+    }
+    .footer a {
+      color: #0288d1;
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      .container {
+        max-width: 95%;
+      }
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .fna-logo, .serfyneg-logo {
+        width: 120px;
+      }
+      .chat-container {
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Encabezado -->
+    <div class="header">
+      <img src="https://prod-fillout-oregon-s3.s3.us-west-2.amazonaws.com/orgid-93755/flowpublicid-3GHfNmRcy6us/a1ab014d-1a91-4d8e-90d1-8d652d3f00af-YSOnC2K6r8k4KAmarGJCQe0F9VyMLH1Z2Q0g98vJSHMQjY5viuCoeNFPtFAePxpLbrp2s14yWR4zcGnbFB863SQZFsKoWN7ecSW/FNA.png" alt="FNA Logo" class="fna-logo">
+      <img src="https://prod-fillout-oregon-s3.s3.us-west-2.amazonaws.com/orgid-93755/flowpublicid-3GHfNmRcy6us/455589ae-de66-4d69-be7e-e4759fb7aabd-O7DOGGmp0yTs54E0ZmKiPewkgup52Qm5B09rSS5HaicYAGNQNht8IgUi5qcCBl11HfSbz8capajp9IQzjcek0Qx90sLNtxL7UMo/logoSerfyneg.png" alt="Serfyneg Logo" class="serfyneg-logo">
+    </div>
+
+    <!-- Contenido -->
+    <div class="content">
+      <h1>Encuentra tu inmueble ideal</h1>
+      <p>Habla con nuestro chatbot para descubrir apartamentos, casas y lotes en toda Colombia. Ingresa tus preferencias y te ayudaremos a encontrar la propiedad perfecta.</p>
+      <div class="chat-container">
+        <div class="loading" id="chat-loading">Cargando chatbot...</div>
+        <flowise-fullchatbot id="chatbot"></flowise-fullchatbot>
+      </div>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="footer">
+      <p>Serfyneg S.A.S. | Todos los derechos reservados | 2025</p>
+      <p>Teléfono: 601 915 9644 ext. 3003 | Correo: <a href="mailto:fna@serfyneg.com">fna@serfyneg.com</a></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+
+    const initChatbot = async () => {
+      try {
+        await Chatbot.initFull({
+          chatflowid: "ba43c2e8-18d3-4c81-99ff-44c8152f5c9b",
+          apiHost: "http://localhost:3000",
+        });
+        // Hide loading state
+        document.getElementById("chat-loading").style.display = "none";
+        document.getElementById("chatbot").style.display = "block";
+      } catch (error) {
+        console.error("Error initializing chatbot:", error);
+        document.getElementById("chat-loading").innerText = "Error al cargar el chatbot. Por favor, intenta de nuevo.";
+      }
+    };
+
+    // Initialize chatbot with a slight delay to ensure DOM is ready
+    setTimeout(initChatbot, 100);
+  </script>
+</body>
+</html>
